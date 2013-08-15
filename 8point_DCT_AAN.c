@@ -1,5 +1,4 @@
 
-
 #include <stdio.h>
 
 /*
@@ -64,7 +63,7 @@ void 8point_dct_aan(int* input, int* output){
   stage3.row6 = stage2.row6              ;
   stage3.row7 = stage2.row7              ;
   
-  //stage 4
+  //stage 4 to Update
   stage4.row0 = stage3.row0                     ;
   stage4.row1 = stage3.row1                     ;
   stage4.row2 = stage3.row2*[a1]                ;
