@@ -104,7 +104,7 @@ void dct_aan(int* input, int* output){
 
 void main(){
   int intput[8] = {0,1,2,3,4,5,6,7};
-  int output[8] = 0;
+  int output[8] = {0};
   int flag = 0;
   dct_aan(input,output);
   printf("transform complete, print out Output values to see the output");
