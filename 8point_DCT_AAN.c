@@ -1,10 +1,8 @@
-
 #include <stdio.h>
 
 /*
   @ Description: A 8 point 1-D AAN DCT
   @ Author:      Pratyush Kumar Ranjan
-  @ Email:       pratyushkmr@live.com
   @ Date:        15 Aug 2013
 */
 
@@ -64,14 +62,21 @@ void 8point_dct_aan(int* input, int* output){
   stage3.row7 = stage2.row7              ;
   
   //stage 4 to Update
+  // a1 = 0.707 0.10110101
+  // a2 = 0.541 0.10001010
+  // a3 = 0.707 0.10110101
+  // a4 = 1.307 1.01001111
+  // a5 = 0.383 0.01100010
   stage4.row0 = stage3.row0                     ;
   stage4.row1 = stage3.row1                     ;
-  stage4.row2 = stage3.row2*[a1]                ;
+  stage4.row2 = (stage3.row2>>1)+(stage3.row2>>3)+(stage3.row2>>4)+((stage3.row2+32)>>6)+((stage3.row2+128)>>8);
   stage4.row3 = stage3.row3                     ;
-  temp_buff   = a[5]*(stage3.row4 + stage3.row6);
-  stage4.row4 = stage3.row4[a2]- temp_buff      ;
-  stage4.row5 = stage3.row5*a3                  ;
-  stage4.row6 = stage3.row6*a4 - temp_buff      ;
+  
+  temp_buff   = stage3.row4 + stage3.row6;
+  temp_buff   = (temp_buff>>2)+(temp_buff>>3)+((temp_buff+64)>>7);
+  stage4.row4 = (stage3.row4>>1)+((stage3.row4+16)>>5)+((stage3.row4+64)>>7)- temp_buff;
+  stage4.row5 = (stage3.row5>>1)+(stage3.row5>>3)+(stage3.row5>>4)+((stage3.row5+32)>>6)+((stage3.row5+128)>>8);
+  stage4.row6 = stage3.row6+(stage3.row6>>2)+(stage3.row6>>5)+(stage3.row6>>6)+(stage3.row6>>7)+(stage3.row6>>8)-temp_buff;
   stage4.row7 = stage3.row7                     ;
   
   //stage 5
@@ -84,27 +89,24 @@ void 8point_dct_aan(int* input, int* output){
   stage5.row6 = stage4.row6              ;
   stage5.row7 = stage4.row7 - stage4.row5;
 
-  //stage 6
-  stage6.row0 = stage5.row0              ;
-  stage6.row1 = stage5.row1              ;
-  stage6.row2 = stage5.row2              ;
-  stage6.row3 = stage5.row3              ;
-  stage6.row4 = stage5.row4 + stage5.row7;
-  stage6.row5 = stage5.row5 + stage5.row6;
-  stage6.row6 = stage5.row5 - stage5.row6;
-  stage6.row7 = stage5.row4 + stage5.row7;
+  //stage 6 Output
+  output[0] = stage5.row0              ;
+  output[4] = stage5.row1              ;
+  output[2] = stage5.row2              ;
+  output[6] = stage5.row3              ;
+  output[5] = stage5.row4 + stage5.row7;
+  output[1] = stage5.row5 + stage5.row6;
+  output[7] = stage5.row5 - stage5.row6;
+  output[3] = stage5.row4 + stage5.row7;
 
-  //output
-  output
-  output
-  output
-  output
-
-  
   }
   
 //Driver
 
 void main(){
-
+  int intput[8] = {0,1,2,3,4,5,6,7};
+  int output[8] = 0;
+  int flag = 0;
+  8point_dct_aan(input,output);
+  printf("transform complete, print out Output values to see the output");
 }
