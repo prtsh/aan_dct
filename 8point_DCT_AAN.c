@@ -17,8 +17,8 @@ int row6;
 int row7;
 } dct_stage;
 
-void 8point_dct_aan(int*, int* );
-void 8point_dct_aan(int* input, int* output){
+void dct_aan(int*, int* );
+void dct_aan(int* input, int* output){
   
   int iter;
   int temp_buff;
@@ -28,7 +28,6 @@ void 8point_dct_aan(int* input, int* output){
   dct_stage stage3;
   dct_stage stage4;
   dct_stage stage5;
-  dct_stage stage6;
  
   //stage 1
   stage1.row0 = input[0] + input[6];
@@ -61,7 +60,7 @@ void 8point_dct_aan(int* input, int* output){
   stage3.row6 = stage2.row6              ;
   stage3.row7 = stage2.row7              ;
   
-  //stage 4 to Update
+  //stage 4 
   // a1 = 0.707 0.10110101
   // a2 = 0.541 0.10001010
   // a3 = 0.707 0.10110101
@@ -107,6 +106,6 @@ void main(){
   int intput[8] = {0,1,2,3,4,5,6,7};
   int output[8] = 0;
   int flag = 0;
-  8point_dct_aan(input,output);
+  dct_aan(input,output);
   printf("transform complete, print out Output values to see the output");
 }
